@@ -31,8 +31,7 @@ function startAutoRotate() {
   if (autoRotateTimer) clearInterval(autoRotateTimer);
   autoRotateTimer = setInterval(() => {
     applyTheme(nextTheme());
-  }, 45000); // rotate every 45 seconds
-}
+300000}
 
 function stopAutoRotate() {
   if (autoRotateTimer) {
@@ -51,8 +50,7 @@ function initTheme() {
   const btn = document.getElementById('theme-toggle-btn');
   if (btn) {
     btn.addEventListener('click', () => {
-      stopAutoRotate();
-      applyTheme(nextTheme());
+  }, 300000); // rotate every 5 minutes      applyTheme(nextTheme());
       // Resume auto-rotate after 3 minutes
       setTimeout(startAutoRotate, 180000);
     });
