@@ -1,14 +1,12 @@
 // ── Theme management ──
-const THEMES = ['slate', 'forest', 'ocean', 'dusk', 'graphite', 'cocoa'];
-const THEME_KEY = 'my_tasks_theme';
+const THEMES = ['peach', 'coral', 'lavender', 'mint', 'olive'];const THEME_KEY = 'my_tasks_theme';
 const THEME_NAMES = {
-  slate:    'Cosmic',
-  forest:   'Forest',
-  ocean:    'Ocean',
-  dusk:     'Dusk',
-  graphite: 'Noir',
-  cocoa:    'Cocoa'
-};
+  peach:    'Peachy',
+  coral:    'Coral',
+  lavender: 'Lavender',
+  mint:     'Mint',
+  olive:    'Olive'
+};};
 
 let autoRotateTimer = null;
 
@@ -24,7 +22,7 @@ function applyTheme(theme, save = true) {
 }
 
 function nextTheme() {
-  const current = document.body.getAttribute('data-theme') || 'slate';
+  const current = document.body.getAttribute('data-theme') || 'peach';
   const idx = THEMES.indexOf(current);
   return THEMES[(idx + 1) % THEMES.length];
 }
