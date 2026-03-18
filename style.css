@@ -1,32 +1,159 @@
-* {
-  box-sizing: border-box;
+/* ── CSS custom properties per theme ── */
+:root {
+  --bg:        #1e2a3a;
+  --surface:   #263548;
+  --surface2:  #1a2332;
+  --accent:    #3b82c4;
+  --accent2:   #2d6aad;
+  --text:      #dce6f0;
+  --text-muted:#8fa8c0;
+  --header-bg: #1a2d45;
+  --tag:       #2d6aad;
+  --del:       #c0392b;
+  --check:     #3b82c4;
+  --transition-speed: 1.2s;
 }
+
+/* Slate Blue (default) */
+body[data-theme="slate"] {
+  --bg:        #1e2a3a;
+  --surface:   #263548;
+  --surface2:  #1a2332;
+  --accent:    #3b82c4;
+  --accent2:   #2d6aad;
+  --text:      #dce6f0;
+  --text-muted:#8fa8c0;
+  --header-bg: #1a2d45;
+}
+
+/* Forest */
+body[data-theme="forest"] {
+  --bg:        #1a2a1f;
+  --surface:   #223328;
+  --surface2:  #162018;
+  --accent:    #4a9c6d;
+  --accent2:   #3a7d58;
+  --text:      #d4e8db;
+  --text-muted:#7aaa8e;
+  --header-bg: #162818;
+}
+
+/* Ocean */
+body[data-theme="ocean"] {
+  --bg:        #12243a;
+  --surface:   #1a3050;
+  --surface2:  #0e1d30;
+  --accent:    #2e86ab;
+  --accent2:   #236a8a;
+  --text:      #cce4f0;
+  --text-muted:#6a9eb8;
+  --header-bg: #0e1d30;
+}
+
+/* Dusk */
+body[data-theme="dusk"] {
+  --bg:        #2a1f2e;
+  --surface:   #362840;
+  --surface2:  #21182a;
+  --accent:    #8b6abf;
+  --accent2:   #6f52a0;
+  --text:      #e0d4f0;
+  --text-muted:#9e85be;
+  --header-bg: #1f1428;
+}
+
+/* Graphite */
+body[data-theme="graphite"] {
+  --bg:        #1c1c1c;
+  --surface:   #282828;
+  --surface2:  #141414;
+  --accent:    #7a7a8c;
+  --accent2:   #5e5e70;
+  --text:      #e0e0e0;
+  --text-muted:#888888;
+  --header-bg: #111111;
+}
+
+/* Warm Cocoa */
+body[data-theme="cocoa"] {
+  --bg:        #2a1e16;
+  --surface:   #362820;
+  --surface2:  #1e1510;
+  --accent:    #b07040;
+  --accent2:   #8f5a30;
+  --text:      #f0e0d0;
+  --text-muted:#b09080;
+  --header-bg: #1e1208;
+}
+
+/* ── Global reset & layout ── */
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #0f172a;
-  color: #f9fafb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background var(--transition-speed) ease,
+              color var(--transition-speed) ease;
+  min-height: 100vh;
 }
 
+/* ── Header ── */
 header {
-  padding: 1rem;
-  text-align: center;
-  background: #0f766e;
+  padding: 0.9rem 1rem 0.75rem;
+  background: var(--header-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  transition: background var(--transition-speed) ease;
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.5rem;
-  letter-spacing: 0.05em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
 }
 
+/* ── Theme picker dots ── */
+.theme-picker {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.theme-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  outline: none;
+}
+
+.theme-dot:hover { transform: scale(1.25); }
+.theme-dot.active { border-color: var(--text); transform: scale(1.2); }
+
+.theme-dot[data-theme="slate"]   { background: #3b82c4; }
+.theme-dot[data-theme="forest"]  { background: #4a9c6d; }
+.theme-dot[data-theme="ocean"]   { background: #2e86ab; }
+.theme-dot[data-theme="dusk"]    { background: #8b6abf; }
+.theme-dot[data-theme="graphite"]{ background: #7a7a8c; }
+.theme-dot[data-theme="cocoa"]   { background: #b07040; }
+
+/* ── Main content ── */
 main {
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   padding: 1rem;
 }
 
+/* ── Add task form ── */
 form {
   display: flex;
   gap: 0.5rem;
@@ -35,50 +162,66 @@ form {
 
 input[type="text"] {
   flex: 1;
-  padding: 0.6rem 0.8rem;
+  padding: 0.65rem 0.9rem;
   border-radius: 0.5rem;
-  border: none;
-  font-size: 1rem;
-  background: #1e293b;
-  color: #f9fafb;
+  border: 1px solid var(--surface);
+  font-size: 0.95rem;
+  background: var(--surface);
+  color: var(--text);
+  transition: background var(--transition-speed) ease,
+              border-color 0.2s ease;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent);
 }
 
 input[type="text"]::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
+/* ── Buttons ── */
 button {
-  padding: 0.6rem 0.9rem;
+  padding: 0.65rem 1rem;
   border-radius: 0.5rem;
   border: none;
-  background: #22c55e;
-  color: #022c22;
+  background: var(--accent);
+  color: #fff;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
 }
 
-button:active {
-  transform: scale(0.97);
+button:active { transform: scale(0.97); }
+
+button:hover {
+  background: var(--accent2);
 }
 
+/* ── Filter bar ── */
 .filters {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   margin-bottom: 1rem;
 }
 
 .filters button {
   flex: 1;
-  background: #1e293b;
-  color: #e5e7eb;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.5rem;
 }
 
 .filters button.active {
-  background: #22c55e;
-  color: #022c22;
+  background: var(--accent);
+  color: #fff;
 }
 
+/* ── Task list ── */
 #task-list {
   list-style: none;
   padding: 0;
@@ -88,37 +231,74 @@ button:active {
 .task-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 0.8rem;
-  margin-bottom: 0.5rem;
-  border-radius: 0.5rem;
-  background: #1e293b;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 0.45rem;
+  border-radius: 0.6rem;
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-item.completed {
+  border-left-color: var(--text-muted);
+  opacity: 0.65;
 }
 
 .task-item.completed .task-text {
   text-decoration: line-through;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .task-text {
   flex: 1;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .task-actions button {
   background: transparent;
-  color: #94a3b8;
-  padding: 0.2rem 0.4rem;
-  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.8rem;
+  transition: color 0.2s;
 }
 
 .task-actions button:hover {
-  color: #ef4444;
+  color: var(--del);
+  background: transparent;
 }
 
+/* ── Checkbox ── */
 input[type="checkbox"] {
   width: 1.1rem;
   height: 1.1rem;
-  accent-color: #22c55e;
+  accent-color: var(--accent);
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2.5rem 0;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* ── Theme label ── */
+.theme-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
 }
