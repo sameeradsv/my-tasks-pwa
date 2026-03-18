@@ -19,6 +19,8 @@ function applyTheme(theme, save = true) {
   if (nameDisplay) nameDisplay.textContent = THEME_NAMES[theme] || theme;
   // Persist
   if (save) localStorage.setItem(THEME_KEY, theme);
+    // Notify canvas
+  document.body.dispatchEvent(new CustomEvent('data-theme-change', {detail: theme}));
 }
 
 function nextTheme() {
