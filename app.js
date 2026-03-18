@@ -2,11 +2,11 @@
 const THEMES = ['slate', 'forest', 'ocean', 'dusk', 'graphite', 'cocoa'];
 const THEME_KEY = 'my_tasks_theme';
 const THEME_NAMES = {
-  slate:    'Slate',
+  slate:    'Cosmic',
   forest:   'Forest',
   ocean:    'Ocean',
   dusk:     'Dusk',
-  graphite: 'Graphite',
+  graphite: 'Noir',
   cocoa:    'Cocoa'
 };
 
@@ -14,25 +14,24 @@ let autoRotateTimer = null;
 
 function applyTheme(theme, save = true) {
   document.body.setAttribute('data-theme', theme);
-  // Update active dot
-  document.querySelectorAll('.theme-dot').forEach(dot => {
-    dot.classList.toggle('active', dot.dataset.theme === theme);
-  });
-  // Update label
-  const label = document.getElementById('theme-label');
-  if (label) label.textContent = THEME_NAMES[theme] || theme;
+  // Update theme button label
+  const nameDisplay = document.getElementById('theme-name-display');
+  if (nameDisplay) nameDisplay.textContent = THEME_NAMES[theme] || theme;
   // Persist
   if (save) localStorage.setItem(THEME_KEY, theme);
+}
+
+function nextTheme() {
+  const current = document.body.getAttribute('data-theme') || 'slate';
+  const idx = THEMES.indexOf(current);
+  return THEMES[(idx + 1) % THEMES.length];
 }
 
 function startAutoRotate() {
   if (autoRotateTimer) clearInterval(autoRotateTimer);
   autoRotateTimer = setInterval(() => {
-    const current = document.body.getAttribute('data-theme') || 'slate';
-    const idx = THEMES.indexOf(current);
-    const next = THEMES[(idx + 1) % THEMES.length];
-    applyTheme(next);
-  }, 30000); // rotate every 30 seconds
+    applyTheme(nextTheme());
+  }, 45000); // rotate every 45 seconds
 }
 
 function stopAutoRotate() {
@@ -48,15 +47,16 @@ function initTheme() {
   applyTheme(theme, false);
   startAutoRotate();
 
-  // Theme dot click handlers
-  document.querySelectorAll('.theme-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
+  // Single theme toggle button
+  const btn = document.getElementById('theme-toggle-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
       stopAutoRotate();
-      applyTheme(dot.dataset.theme);
-      // Resume auto-rotate after 2 minutes of manual selection
-      setTimeout(startAutoRotate, 120000);
+      applyTheme(nextTheme());
+      // Resume auto-rotate after 3 minutes
+      setTimeout(startAutoRotate, 180000);
     });
-  });
+  }
 }
 
 // ── Task management ──
@@ -157,7 +157,7 @@ function renderTasks() {
     actions.className = 'task-actions';
 
     const delBtn = document.createElement('button');
-    delBtn.textContent = 'x';
+    delBtn.textContent = '✕';
     delBtn.setAttribute('aria-label', 'Delete task');
     delBtn.addEventListener('click', () => deleteTask(task.id));
 
