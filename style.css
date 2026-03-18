@@ -11,11 +11,11 @@
   --border:           rgba(255,255,255,0.1);--border:          rgba(255,255,255,0.1);
 }
 
-body[data-theme="peach"]  { --accent:#FFB07C; --accent2:#FF8C61; --accent-gradient:linear-gradient(90deg,#FFB07C,#FF8C61); --text:#2c1810; --text-muted:#5c3828; --surface-opaque:#FFF5EE; }
-body[data-theme="coral"]  { --accent:#FF6B6B; --accent2:#FFB347; --accent-gradient:linear-gradient(90deg,#FF6B6B,#FFB347); --text:#4a1515; --text-muted:#7a2828; --surface-opaque:#FFF0F0; }
-body[data-theme="lavender"]{ --accent:#B19CD9; --accent2:#C8B6E2; --accent-gradient:linear-gradient(90deg,#B19CD9,#C8B6E2); --text:#3d2b52; --text-muted:#6b4c80; --surface-opaque:#F8F4FF; }
-body[data-theme="mint"]    { --accent:#98D8C8; --accent2:#6BCF9F; --accent-gradient:linear-gradient(90deg,#98D8C8,#6BCF9F); --text:#1a3d32; --text-muted:#2d5a48; --surface-opaque:#F0FFF8; }
-body[data-theme="olive"]   { --accent:#9CAF88; --accent2:#B8C5A8; --accent-gradient:linear-gradient(90deg,#9CAF88,#B8C5A8); --text:#2d3a23; --text-muted:#4a5a3c; --surface-opaque:#F5F7F0; }
+body[data-theme="peach"]  { --accent:#FFB07C; --accent2:#FF8C61; --accent-gradient:linear-gradient(90deg,#FFB07C,#FF8C61); --text:#e8d4c8; --text-muted:#c8b4a8; --surface-opaque:#FFF5EE; }
+body[data-theme="coral"]  { --accent:#FF6B6B; --accent2:#FFB347; --accent-gradient:linear-gradient(90deg,#FF6B6B,#FFB347); --text:#ffcfcf; --text-muted:#ffb8b8; --surface-opaque:#FFF0F0; }
+body[data-theme="lavender"]{ --accent:#B19CD9; --accent2:#C8B6E2; --accent-gradient:linear-gradient(90deg,#B19CD9,#C8B6E2); --text:#e8d4ff; --text-muted:#d4c0e8; --surface-opaque:#F8F4FF; }
+body[data-theme="mint"]    { --accent:#98D8C8; --accent2:#6BCF9F; --accent-gradient:linear-gradient(90deg,#98D8C8,#6BCF9F); --text:#d4ffe8; --text-muted:#c0ffd4; --surface-opaque:#F0FFF8; }
+body[data-theme="olive"]   { --accent:#9CAF88; --accent2:#B8C5A8; --accent-gradient:linear-gradient(90deg,#9CAF88,#B8C5A8); --text:#e8ffd4; --text-muted:#d4ffc0; --surface-opaque:#F5F7F0; }
 /* ── Canvas background layer ── */
 #bg-canvas {
   position: fixed;
