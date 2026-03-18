@@ -1,3 +1,65 @@
+// ── Theme management ──
+const THEMES = ['slate', 'forest', 'ocean', 'dusk', 'graphite', 'cocoa'];
+const THEME_KEY = 'my_tasks_theme';
+const THEME_NAMES = {
+  slate:    'Slate',
+  forest:   'Forest',
+  ocean:    'Ocean',
+  dusk:     'Dusk',
+  graphite: 'Graphite',
+  cocoa:    'Cocoa'
+};
+
+let autoRotateTimer = null;
+
+function applyTheme(theme, save = true) {
+  document.body.setAttribute('data-theme', theme);
+  // Update active dot
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.theme === theme);
+  });
+  // Update label
+  const label = document.getElementById('theme-label');
+  if (label) label.textContent = THEME_NAMES[theme] || theme;
+  // Persist
+  if (save) localStorage.setItem(THEME_KEY, theme);
+}
+
+function startAutoRotate() {
+  if (autoRotateTimer) clearInterval(autoRotateTimer);
+  autoRotateTimer = setInterval(() => {
+    const current = document.body.getAttribute('data-theme') || 'slate';
+    const idx = THEMES.indexOf(current);
+    const next = THEMES[(idx + 1) % THEMES.length];
+    applyTheme(next);
+  }, 30000); // rotate every 30 seconds
+}
+
+function stopAutoRotate() {
+  if (autoRotateTimer) {
+    clearInterval(autoRotateTimer);
+    autoRotateTimer = null;
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const theme = saved && THEMES.includes(saved) ? saved : THEMES[0];
+  applyTheme(theme, false);
+  startAutoRotate();
+
+  // Theme dot click handlers
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      stopAutoRotate();
+      applyTheme(dot.dataset.theme);
+      // Resume auto-rotate after 2 minutes of manual selection
+      setTimeout(startAutoRotate, 120000);
+    });
+  });
+}
+
+// ── Task management ──
 const STORAGE_KEY = 'my_tasks_v1';
 
 let tasks = [];
@@ -55,7 +117,7 @@ function setFilter(filter) {
 }
 
 function filteredTasks() {
-  if (currentFilter === 'pending') return tasks.filter(t => !t.completed);
+  if (currentFilter === 'pending')   return tasks.filter(t => !t.completed);
   if (currentFilter === 'completed') return tasks.filter(t => t.completed);
   return tasks;
 }
@@ -66,8 +128,13 @@ function renderTasks() {
 
   if (visible.length === 0) {
     const empty = document.createElement('li');
-    empty.style.cssText = 'text-align:center;color:#6b7280;padding:2rem 0;';
-    empty.textContent = 'No tasks here.';
+    empty.className = 'empty-state';
+    const msgs = {
+      all:       'No tasks yet. Add one above!',
+      pending:   'All caught up! No pending tasks.',
+      completed: 'Nothing completed yet.'
+    };
+    empty.textContent = msgs[currentFilter] || 'No tasks here.';
     list.appendChild(empty);
     return;
   }
@@ -79,6 +146,7 @@ function renderTasks() {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = task.completed;
+    checkbox.setAttribute('aria-label', 'Mark task complete');
     checkbox.addEventListener('change', () => toggleTask(task.id));
 
     const span = document.createElement('span');
@@ -114,4 +182,6 @@ filterButtons.forEach(btn => {
   btn.addEventListener('click', () => setFilter(btn.dataset.filter));
 });
 
+// ── Init ──
+initTheme();
 loadTasks();
