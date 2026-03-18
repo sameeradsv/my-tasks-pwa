@@ -7,24 +7,36 @@
 
   <!-- PWA manifest -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#0f766e" />
+  <meta name="theme-color" content="#1a2d45" />
 
   <!-- iOS PWA specific -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="My Tasks" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-theme="slate">
+
   <header>
     <h1>My Tasks</h1>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+      <div class="theme-picker" role="group" aria-label="Choose theme">
+        <button class="theme-dot active" data-theme="slate"  title="Slate"></button>
+        <button class="theme-dot"        data-theme="forest" title="Forest"></button>
+        <button class="theme-dot"        data-theme="ocean"  title="Ocean"></button>
+        <button class="theme-dot"        data-theme="dusk"   title="Dusk"></button>
+        <button class="theme-dot"        data-theme="graphite" title="Graphite"></button>
+        <button class="theme-dot"        data-theme="cocoa"  title="Cocoa"></button>
+      </div>
+      <span class="theme-label" id="theme-label">Slate</span>
+    </div>
   </header>
 
   <main>
     <form id="task-form">
-      <input id="task-input" type="text" placeholder="New task..." required />
+      <input id="task-input" type="text" placeholder="Add a task..." required />
       <button type="submit">Add</button>
     </form>
 
