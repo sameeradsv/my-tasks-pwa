@@ -7,67 +7,59 @@
 
   <!-- PWA manifest -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#1a2d45" />
+  <meta name="theme-color" content="#0f172a" />
 
-  <!-- iOS PWA specific -->
+  <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="My Tasks" />
 
-  <!-- iOS touch icon generated via canvas (no PNG file needed) -->
+  <!-- iOS touch icon via canvas -->
   <script>
     (function() {
       var c = document.createElement('canvas');
       c.width = 192; c.height = 192;
       var ctx = c.getContext('2d');
-      // Rounded rect background
-      ctx.fillStyle = '#1a2d45';
+      ctx.fillStyle = '#0f172a';
       ctx.beginPath();
       var r = 32;
-      ctx.moveTo(r, 0); ctx.lineTo(192-r, 0);
-      ctx.quadraticCurveTo(192, 0, 192, r);
-      ctx.lineTo(192, 192-r); ctx.quadraticCurveTo(192, 192, 192-r, 192);
-      ctx.lineTo(r, 192); ctx.quadraticCurveTo(0, 192, 0, 192-r);
-      ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
+      ctx.moveTo(r,0); ctx.lineTo(192-r,0); ctx.quadraticCurveTo(192,0,192,r);
+      ctx.lineTo(192,192-r); ctx.quadraticCurveTo(192,192,192-r,192);
+      ctx.lineTo(r,192); ctx.quadraticCurveTo(0,192,0,192-r);
+      ctx.lineTo(0,r); ctx.quadraticCurveTo(0,0,r,0);
       ctx.closePath(); ctx.fill();
-      // Draw 3 rows of checklist
       var rows = [{y:72,checked:true},{y:104,checked:false},{y:136,checked:true}];
       rows.forEach(function(row) {
-        ctx.strokeStyle = '#7ec8c8'; ctx.lineWidth = 5;
-        ctx.beginPath(); ctx.arc(52, row.y, 10, 0, 2*Math.PI); ctx.stroke();
-        if (row.checked) {
-          ctx.strokeStyle = '#7ec8c8'; ctx.lineWidth = 4;
-          ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-          ctx.beginPath(); ctx.moveTo(47, row.y); ctx.lineTo(51, row.y+5); ctx.lineTo(58, row.y-6); ctx.stroke();
+        ctx.strokeStyle='#38bdf8'; ctx.lineWidth=5;
+        ctx.beginPath(); ctx.arc(52,row.y,10,0,2*Math.PI); ctx.stroke();
+        if(row.checked){
+          ctx.strokeStyle='#38bdf8'; ctx.lineWidth=4;
+          ctx.lineCap='round'; ctx.lineJoin='round';
+          ctx.beginPath(); ctx.moveTo(47,row.y); ctx.lineTo(51,row.y+5); ctx.lineTo(58,row.y-6); ctx.stroke();
         }
-        ctx.fillStyle = '#c8d8e8';
+        ctx.fillStyle='#bae6fd';
         ctx.beginPath();
-        var bw = row.checked ? 72 : 60;
-        ctx.roundRect(72, row.y-5, bw, 10, 5); ctx.fill();
+        ctx.roundRect(72,row.y-5,row.checked?72:60,10,5); ctx.fill();
       });
-      var link = document.createElement('link');
-      link.rel = 'apple-touch-icon';
-      link.href = c.toDataURL('image/png');
+      var link=document.createElement('link');
+      link.rel='apple-touch-icon';
+      link.href=c.toDataURL('image/png');
       document.head.appendChild(link);
     })();
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body data-theme="slate">
 
   <header>
     <h1>My Tasks</h1>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-      <div class="theme-picker" role="group" aria-label="Choose theme">
-        <button class="theme-dot active" data-theme="slate"  title="Slate"></button>
-        <button class="theme-dot"         data-theme="forest" title="Forest"></button>
-        <button class="theme-dot"         data-theme="ocean"  title="Ocean"></button>
-        <button class="theme-dot"         data-theme="dusk"   title="Dusk"></button>
-        <button class="theme-dot"         data-theme="graphite" title="Graphite"></button>
-        <button class="theme-dot"         data-theme="cocoa"  title="Cocoa"></button>
-      </div>
-      <span class="theme-label" id="theme-label">Slate</span>
+    <div class="theme-switch-wrapper">
+      <button id="theme-toggle-btn" aria-label="Switch theme">✨ Theme</button>
+      <span class="theme-name-display" id="theme-name-display">Cosmic</span>
     </div>
   </header>
 
@@ -80,7 +72,7 @@
     <section class="filters">
       <button data-filter="all" class="active">All</button>
       <button data-filter="pending">Pending</button>
-      <button data-filter="completed">Completed</button>
+      <button data-filter="completed">Done</button>
     </section>
 
     <ul id="task-list"></ul>
