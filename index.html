@@ -13,7 +13,44 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="My Tasks" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- iOS touch icon generated via canvas (no PNG file needed) -->
+  <script>
+    (function() {
+      var c = document.createElement('canvas');
+      c.width = 192; c.height = 192;
+      var ctx = c.getContext('2d');
+      // Rounded rect background
+      ctx.fillStyle = '#1a2d45';
+      ctx.beginPath();
+      var r = 32;
+      ctx.moveTo(r, 0); ctx.lineTo(192-r, 0);
+      ctx.quadraticCurveTo(192, 0, 192, r);
+      ctx.lineTo(192, 192-r); ctx.quadraticCurveTo(192, 192, 192-r, 192);
+      ctx.lineTo(r, 192); ctx.quadraticCurveTo(0, 192, 0, 192-r);
+      ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
+      ctx.closePath(); ctx.fill();
+      // Draw 3 rows of checklist
+      var rows = [{y:72,checked:true},{y:104,checked:false},{y:136,checked:true}];
+      rows.forEach(function(row) {
+        ctx.strokeStyle = '#7ec8c8'; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.arc(52, row.y, 10, 0, 2*Math.PI); ctx.stroke();
+        if (row.checked) {
+          ctx.strokeStyle = '#7ec8c8'; ctx.lineWidth = 4;
+          ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+          ctx.beginPath(); ctx.moveTo(47, row.y); ctx.lineTo(51, row.y+5); ctx.lineTo(58, row.y-6); ctx.stroke();
+        }
+        ctx.fillStyle = '#c8d8e8';
+        ctx.beginPath();
+        var bw = row.checked ? 72 : 60;
+        ctx.roundRect(72, row.y-5, bw, 10, 5); ctx.fill();
+      });
+      var link = document.createElement('link');
+      link.rel = 'apple-touch-icon';
+      link.href = c.toDataURL('image/png');
+      document.head.appendChild(link);
+    })();
+  </script>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -24,11 +61,11 @@
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
       <div class="theme-picker" role="group" aria-label="Choose theme">
         <button class="theme-dot active" data-theme="slate"  title="Slate"></button>
-        <button class="theme-dot"        data-theme="forest" title="Forest"></button>
-        <button class="theme-dot"        data-theme="ocean"  title="Ocean"></button>
-        <button class="theme-dot"        data-theme="dusk"   title="Dusk"></button>
-        <button class="theme-dot"        data-theme="graphite" title="Graphite"></button>
-        <button class="theme-dot"        data-theme="cocoa"  title="Cocoa"></button>
+        <button class="theme-dot"         data-theme="forest" title="Forest"></button>
+        <button class="theme-dot"         data-theme="ocean"  title="Ocean"></button>
+        <button class="theme-dot"         data-theme="dusk"   title="Dusk"></button>
+        <button class="theme-dot"         data-theme="graphite" title="Graphite"></button>
+        <button class="theme-dot"         data-theme="cocoa"  title="Cocoa"></button>
       </div>
       <span class="theme-label" id="theme-label">Slate</span>
     </div>
