@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0f172a;
+  color: #f9fafb;
+}
+
+header {
+  padding: 1rem;
+  text-align: center;
+  background: #0f766e;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  background: #1e293b;
+  color: #f9fafb;
+}
+
+input[type="text"]::placeholder {
+  color: #94a3b8;
+}
+
+button {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #22c55e;
+  color: #022c22;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filters button {
+  flex: 1;
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+.filters button.active {
+  background: #22c55e;
+  color: #022c22;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  background: #1e293b;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.task-actions button {
+  background: transparent;
+  color: #94a3b8;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+}
+
+.task-actions button:hover {
+  color: #ef4444;
+}
+
+input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: #22c55e;
+  cursor: pointer;
+}
