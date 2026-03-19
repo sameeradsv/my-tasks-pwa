@@ -1,4 +1,4 @@
-/* ── CSS Variables (set dynamically by JS via THEME_META) ── */
+.tag-btn/* ── CSS Variables (set dynamically by JS via THEME_META) ── */
 
 html {
   background: #0a0a0a;
@@ -445,6 +445,12 @@ input[type="checkbox"]:checked::after {
   border: 1.5px solid rgba(255,255,255,0.15);
   color: rgba(255,255,255,0.7);
   font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+  cursor: pointer;
   font-weight: 600;
   padding: 0.5rem 1rem;
   border-radius: 0.7rem;
@@ -460,6 +466,8 @@ input[type="checkbox"]:checked::after {
   border-color: rgba(255,255,255,0.25);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 }
