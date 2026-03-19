@@ -53,23 +53,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-<body data-theme="peach">
-  <canvas id="bg-canvas"></canvas>
-  <script>
-    const T={slate:['#0f172a','#1e293b','#38bdf8'],forest:['#022c22','#064e3b','#10b981'],ocean:['#172554','#1e3a8a','#60a5fa'],dusk:['#2e1065','#4c1d95','#c084fc'],graphite:['#18181b','#27272a','#a1a1aa'],cocoa:['#451a03','#78350f','#fbbf24']};
-    let cv=document.getElementById('bg-canvas'),ctx,orbs=[],cT='slate';
-    function init(){cv.width=innerWidth;cv.height=innerHeight;ctx=cv.getContext('2d');addEventListener('resize',()=>{cv.width=innerWidth;cv.height=innerHeight;});makeOrbs();animate();}
-    function makeOrbs(){const c=T[cT];orbs=[];for(let i=0;i<7;i++)orbs.push({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*160+100,col:c[i%3]});}
-    function animate(){ctx.clearRect(0,0,cv.width,cv.height);const grad=ctx.createRadialGradient(cv.width/2,cv.height/2,0,cv.width/2,cv.height/2,Math.max(cv.width,cv.height));grad.addColorStop(0,T[cT][0]);grad.addColorStop(1,T[cT][1]);ctx.fillStyle=grad;ctx.fillRect(0,0,cv.width,cv.height);orbs.forEach(o=>{o.x+=o.vx;o.y+=o.vy;if(o.x<-o.r||o.x>cv.width+o.r)o.vx*=-1;if(o.y<-o.r||o.y>cv.height+o.r)o.vy*=-1;const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);g.addColorStop(0,o.col+'80');g.addColorStop(1,o.col+'00');ctx.fillStyle=g;ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();});requestAnimationFrame(animate);}
-    document.body.addEventListener('data-theme-change',e=>{cT=e.detail;makeOrbs();});
-    init();
-  </script>
+<body class="theme-aurora">
+  <!-- Animated gradient backgrounds are now pure CSS in style.css -->
 
   <header>
     <h1>My Tasks</h1>
     <div class="theme-switch-wrapper">
       <button id="theme-toggle-btn">&#127752; Theme</button>
-      <span class="theme-name-display" id="theme-name-display">Peachy</span>
+      <span class="theme-name-display" id="theme-name-display">Aurora</span>
     </div>
   </header>
 
