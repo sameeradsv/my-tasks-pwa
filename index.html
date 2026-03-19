@@ -90,6 +90,15 @@
       <button class="tag-btn" data-tag="later">Later</button>
     </div>
 
+        <!-- Bulk Import Section -->
+    <div class="import-section">
+      <input type="file" id="file-input" accept=".txt,.pdf" hidden />
+      <label for="file-input" class="import-btn">
+        📂 Import Tasks from File
+      </label>
+      <div id="import-status" class="import-status"></div>
+    </div>
+
     <!-- Filters -->
     <section class="filters">
       <button data-filter="all" class="active">All</button>
