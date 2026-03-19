@@ -54,26 +54,66 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="theme-aurora">
-  <!-- Animated gradient backgrounds are now pure CSS in style.css -->
 
   <header>
     <h1>My Tasks</h1>
+    <div class="header-right">
+      <div class="mode-pill" id="mode-display" title="Tap to change energy mode"></div>
     </div>
   </header>
 
   <main>
+
+    <!-- Daily Snapshot Banner -->
+    <div class="snapshot-banner" id="snapshot-banner"></div>
+
+    <!-- Energy Mode Selector -->
+    <section class="mode-selector" id="mode-selector">
+      <button class="mode-btn active" data-mode="normal">Normal</button>
+      <button class="mode-btn" data-mode="deep">Deep Work</button>
+      <button class="mode-btn" data-mode="low">Low Energy</button>
+      <button class="mode-btn" data-mode="social">Social Recovery</button>
+    </section>
+
+    <!-- Add Task Form -->
     <form id="task-form">
-      <input id="task-input" type="text" placeholder="Add a task..." required />
+      <input id="task-input" type="text" placeholder="Capture anything..." required />
       <button type="submit">Add</button>
     </form>
 
+    <!-- Tag selector -->
+    <div class="tag-row" id="tag-row">
+      <span class="tag-label">Tag:</span>
+      <button class="tag-btn active" data-tag="general">General</button>
+      <button class="tag-btn" data-tag="work">Work</button>
+      <button class="tag-btn" data-tag="social">Social</button>
+      <button class="tag-btn" data-tag="later">Later</button>
+    </div>
+
+    <!-- Filters -->
     <section class="filters">
       <button data-filter="all" class="active">All</button>
+      <button data-filter="today">Today</button>
       <button data-filter="pending">Pending</button>
       <button data-filter="completed">Done</button>
     </section>
 
+    <!-- Task list -->
     <ul id="task-list"></ul>
+
+    <!-- Next Tiny Step modal -->
+    <div class="nts-overlay" id="nts-overlay" hidden>
+      <div class="nts-card">
+        <p class="nts-title">What's the tiniest next step?</p>
+        <p class="nts-task-name" id="nts-task-name"></p>
+        <input id="nts-input" type="text" placeholder="e.g. Open file and add one function" />
+        <div class="nts-actions">
+          <button id="nts-save">Save step</button>
+          <button id="nts-cancel" class="nts-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="app.js"></script>
