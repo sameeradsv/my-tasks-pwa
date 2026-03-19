@@ -1,6 +1,6 @@
 /* ── Theme colour tokens (canvas handles the background) ── */
 :root {
-    --accent:           #FFB07C;
+  --accent:           #FFB07C;
   --accent2:          #FF8C61;
   --accent-gradient:  linear-gradient(90deg,#FFB07C,#FF8C61);
   --text:             #2c1810;
@@ -8,14 +8,15 @@
   --surface:          rgba(255,255,255,0.08);
   --surface-hover:    rgba(255,255,255,0.12);
   --surface-opaque:   #FFF5EE;
-  --border:           rgba(255,255,255,0.1);--border:          rgba(255,255,255,0.1);
+  --border:           rgba(255,255,255,0.1);
 }
 
-body[data-theme="peach"]  { --accent:#FFB07C; --accent2:#FF8C61; --accent-gradient:linear-gradient(90deg,#FFB07C,#FF8C61); --text:#e8d4c8; --text-muted:#c8b4a8; --surface-opaque:#FFF5EE; }
-body[data-theme="coral"]  { --accent:#FF6B6B; --accent2:#FFB347; --accent-gradient:linear-gradient(90deg,#FF6B6B,#FFB347); --text:#ffcfcf; --text-muted:#ffb8b8; --surface-opaque:#FFF0F0; }
-body[data-theme="lavender"]{ --accent:#B19CD9; --accent2:#C8B6E2; --accent-gradient:linear-gradient(90deg,#B19CD9,#C8B6E2); --text:#e8d4ff; --text-muted:#d4c0e8; --surface-opaque:#F8F4FF; }
-body[data-theme="mint"]    { --accent:#98D8C8; --accent2:#6BCF9F; --accent-gradient:linear-gradient(90deg,#98D8C8,#6BCF9F); --text:#d4ffe8; --text-muted:#c0ffd4; --surface-opaque:#F0FFF8; }
-body[data-theme="olive"]   { --accent:#9CAF88; --accent2:#B8C5A8; --accent-gradient:linear-gradient(90deg,#9CAF88,#B8C5A8); --text:#e8ffd4; --text-muted:#d4ffc0; --surface-opaque:#F5F7F0; }
+body[data-theme="peach"]    { --accent:#FFB07C; --accent2:#FF8C61; --accent-gradient:linear-gradient(90deg,#FFB07C,#FF8C61); --text:#e8d4c8; --text-muted:#c8b4a8; --surface-opaque:#FFF5EE; }
+body[data-theme="coral"]    { --accent:#FF6B6B; --accent2:#FFB347; --accent-gradient:linear-gradient(90deg,#FF6B6B,#FFB347); --text:#ffcfcf; --text-muted:#ffb8b8; --surface-opaque:#FFF0F0; }
+body[data-theme="lavender"] { --accent:#B19CD9; --accent2:#C8B6E2; --accent-gradient:linear-gradient(90deg,#B19CD9,#C8B6E2); --text:#e8d4ff; --text-muted:#d4c0e8; --surface-opaque:#F8F4FF; }
+body[data-theme="mint"]     { --accent:#98D8C8; --accent2:#6BCF9F; --accent-gradient:linear-gradient(90deg,#98D8C8,#6BCF9F); --text:#d4ffe8; --text-muted:#c0ffd4; --surface-opaque:#F0FFF8; }
+body[data-theme="olive"]    { --accent:#9CAF88; --accent2:#B8C5A8; --accent-gradient:linear-gradient(90deg,#9CAF88,#B8C5A8); --text:#e8ffd4; --text-muted:#d4ffc0; --surface-opaque:#F5F7F0; }
+
 /* ── Canvas background layer ── */
 #bg-canvas {
   position: fixed;
@@ -35,7 +36,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: color 1.5s ease;
-    background-color: #1a1a1a;
+  background-color: #1a1a1a;
 }
 
 /* ── Header ── */
@@ -83,7 +84,8 @@ header h1 {
   transition: all 0.3s ease;
 }
 
-#theme-toggle-btn:hover {
+#theme-toggle-btn:hover,
+#theme-toggle-btn:active {
   background: var(--accent-gradient);
   border-color: transparent;
   transform: scale(1.05);
@@ -204,21 +206,31 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
 
 .completed .task-text { text-decoration:line-through; opacity:0.38; }
 
-/* ── Delete btn ── */
+/* ── Delete btn ── Always visible on iOS (touch has no hover) ── */
 .task-actions button {
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.08);
   color: var(--text-muted);
-  width: 26px; height: 26px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border-radius: 50%;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.55;
   transition: opacity 0.2s, background 0.2s;
+  /* Ensure tap target is big enough on iOS */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-.task-item:hover .task-actions button { opacity: 1; }
-.task-actions button:hover { background: rgba(239,68,68,0.25); color:#fca5a5; }
+
+/* Show fully on hover (desktop) or active/touch (iOS) */
+.task-item:hover .task-actions button,
+.task-actions button:hover,
+.task-actions button:active { opacity: 1; }
+
+.task-actions button:hover,
+.task-actions button:active { background: rgba(239,68,68,0.25); color:#fca5a5; }
 
 /* ── Checkbox ── */
 input[type="checkbox"] {
