@@ -1,35 +1,52 @@
-// ── Theme management ──
-const THEMES = ['peach', 'coral', 'lavender', 'mint', 'olive'];
+// ── Theme definitions ──
+// Each theme has: a display name, accent colours for UI elements,
+// and a CSS class name that drives the animated background.
+const THEMES = ['aurora', 'sunset', 'ocean', 'dusk', 'forest'];
 const THEME_KEY = 'my_tasks_theme';
-const THEME_NAMES = {
-  peach:    'Peachy',
-  coral:    'Coral',
-  lavender: 'Lavender',
-  mint:     'Mint',
-  olive:    'Olive'
+const THEME_META = {
+  aurora:  { name: 'Aurora',  accent: '#7dd3fc', accent2: '#c084fc', text: '#e0f2fe', textMuted: '#bae6fd' },
+  sunset:  { name: 'Sunset',  accent: '#fb923c', accent2: '#f472b6', text: '#fff1f2', textMuted: '#fecdd3' },
+  ocean:   { name: 'Ocean',   accent: '#34d399', accent2: '#38bdf8', text: '#ecfdf5', textMuted: '#a7f3d0' },
+  dusk:    { name: 'Dusk',    accent: '#fbbf24', accent2: '#a78bfa', text: '#fdf4ff', textMuted: '#e9d5ff' },
+  forest:  { name: 'Forest',  accent: '#86efac', accent2: '#d97706', text: '#f0fdf4', textMuted: '#bbf7d0' },
 };
 
 let autoRotateTimer = null;
 
 function applyTheme(theme, save = true) {
+  // Remove all theme classes from body
+  THEMES.forEach(t => document.body.classList.remove('theme-' + t));
+  // Add new theme class (drives CSS animated background)
+  document.body.classList.add('theme-' + theme);
   document.body.setAttribute('data-theme', theme);
+
+  // Update CSS variables for UI accent colours
+  const meta = THEME_META[theme];
+  if (meta) {
+    const root = document.documentElement;
+    root.style.setProperty('--accent', meta.accent);
+    root.style.setProperty('--accent2', meta.accent2);
+    root.style.setProperty('--accent-gradient', `linear-gradient(90deg, ${meta.accent}, ${meta.accent2})`);
+    root.style.setProperty('--text', meta.text);
+    root.style.setProperty('--text-muted', meta.textMuted);
+  }
+
   // Update theme button label
   const nameDisplay = document.getElementById('theme-name-display');
-  if (nameDisplay) nameDisplay.textContent = THEME_NAMES[theme] || theme;
-  // Persist
+  if (nameDisplay) nameDisplay.textContent = meta ? meta.name : theme;
+
   if (save) localStorage.setItem(THEME_KEY, theme);
-  // Notify canvas
-  document.body.dispatchEvent(new CustomEvent('data-theme-change', {detail: theme}));
 }
 
 function nextTheme() {
-  const current = document.body.getAttribute('data-theme') || 'peach';
+  const current = document.body.getAttribute('data-theme') || 'aurora';
   const idx = THEMES.indexOf(current);
   return THEMES[(idx + 1) % THEMES.length];
 }
 
 function startAutoRotate() {
   if (autoRotateTimer) clearInterval(autoRotateTimer);
+  // Rotate every 5 minutes (300000 ms)
   autoRotateTimer = setInterval(() => {
     applyTheme(nextTheme());
   }, 300000);
@@ -48,12 +65,12 @@ function initTheme() {
   applyTheme(theme, false);
   startAutoRotate();
 
-  // Single theme toggle button
   const btn = document.getElementById('theme-toggle-btn');
   if (btn) {
     btn.addEventListener('click', () => {
       applyTheme(nextTheme());
-      // Resume auto-rotate after 3 minutes
+      // Resume auto-rotate 3 min after manual change
+      stopAutoRotate();
       setTimeout(startAutoRotate, 180000);
     });
   }
@@ -85,19 +102,13 @@ function saveTasks() {
 }
 
 function addTask(text) {
-  tasks.push({
-    id: Date.now(),
-    text: text.trim(),
-    completed: false
-  });
+  tasks.push({ id: Date.now(), text: text.trim(), completed: false });
   saveTasks();
   renderTasks();
 }
 
 function toggleTask(id) {
-  tasks = tasks.map(t =>
-    t.id === id ? { ...t, completed: !t.completed } : t
-  );
+  tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
   saveTasks();
   renderTasks();
 }
