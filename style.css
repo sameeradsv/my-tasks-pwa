@@ -1,30 +1,74 @@
-/* ── Theme colour tokens (canvas handles the background) ── */
+/* ── CSS Variables (set dynamically by JS via THEME_META) ── */
 :root {
-  --accent:           #FFB07C;
-  --accent2:          #FF8C61;
-  --accent-gradient:  linear-gradient(90deg,#FFB07C,#FF8C61);
-  --text:             #2c1810;
-  --text-muted:       #5c3828;
+  --accent:           #7dd3fc;
+  --accent2:          #c084fc;
+  --accent-gradient:  linear-gradient(90deg, #7dd3fc, #c084fc);
+  --text:             #e0f2fe;
+  --text-muted:       #bae6fd;
   --surface:          rgba(255,255,255,0.08);
   --surface-hover:    rgba(255,255,255,0.12);
-  --surface-opaque:   #FFF5EE;
-  --border:           rgba(255,255,255,0.1);
+  --border:           rgba(255,255,255,0.12);
 }
 
-body[data-theme="peach"]    { --accent:#FFB07C; --accent2:#FF8C61; --accent-gradient:linear-gradient(90deg,#FFB07C,#FF8C61); --text:#e8d4c8; --text-muted:#c8b4a8; --surface-opaque:#FFF5EE; }
-body[data-theme="coral"]    { --accent:#FF6B6B; --accent2:#FFB347; --accent-gradient:linear-gradient(90deg,#FF6B6B,#FFB347); --text:#ffcfcf; --text-muted:#ffb8b8; --surface-opaque:#FFF0F0; }
-body[data-theme="lavender"] { --accent:#B19CD9; --accent2:#C8B6E2; --accent-gradient:linear-gradient(90deg,#B19CD9,#C8B6E2); --text:#e8d4ff; --text-muted:#d4c0e8; --surface-opaque:#F8F4FF; }
-body[data-theme="mint"]     { --accent:#98D8C8; --accent2:#6BCF9F; --accent-gradient:linear-gradient(90deg,#98D8C8,#6BCF9F); --text:#d4ffe8; --text-muted:#c0ffd4; --surface-opaque:#F0FFF8; }
-body[data-theme="olive"]    { --accent:#9CAF88; --accent2:#B8C5A8; --accent-gradient:linear-gradient(90deg,#9CAF88,#B8C5A8); --text:#e8ffd4; --text-muted:#d4ffc0; --surface-opaque:#F5F7F0; }
+/* ── Animated Multi-Colour Gradient Backgrounds ── */
+/* Each theme gets a unique animated gradient */
 
-/* ── Canvas background layer ── */
-#bg-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  display: block;
+/* AURORA: teal -> violet -> rose (northern lights) */
+body.theme-aurora {
+  background: linear-gradient(-45deg, #115e59, #581c87, #881337, #0c4a6e);
+  background-size: 400% 400%;
+  animation: auroraShift 35s ease infinite;
+}
+@keyframes auroraShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* SUNSET: coral -> amber -> magenta -> navy */
+body.theme-sunset {
+  background: linear-gradient(135deg, #ea580c, #fbbf24, #ec4899, #1e3a8a, #ea580c);
+  background-size: 300% 300%;
+  animation: sunsetFlow 40s ease infinite;
+}
+@keyframes sunsetFlow {
+  0%, 100% { background-position: 10% 0%; }
+  50% { background-position: 91% 100%; }
+}
+
+/* OCEAN: deep blue -> cyan -> emerald */
+body.theme-ocean {
+  background: radial-gradient(circle at top left, #065f46, #0891b2, #1e3a8a, #064e3b);
+  background-size: 200% 200%;
+  animation: oceanRoll 38s ease infinite;
+}
+@keyframes oceanRoll {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 50% 100%; }
+  75% { background-position: 50% 0%; }
+}
+
+/* DUSK: purple -> indigo -> gold */
+body.theme-dusk {
+  background: linear-gradient(-60deg, #4c1d95, #312e81, #b45309, #6b21a8, #4c1d95);
+  background-size: 350% 350%;
+  animation: duskGlow 42s ease infinite;
+}
+@keyframes duskGlow {
+  0%, 100% { background-position: 0% 50%; }
+  33% { background-position: 50% 100%; }
+  66% { background-position: 100% 0%; }
+}
+
+/* FOREST: dark green -> bronze -> warm cream */
+body.theme-forest {
+  background: linear-gradient(120deg, #14532d, #78350f, #064e3b, #451a03, #14532d);
+  background-size: 300% 300%;
+  animation: forestBreeze 36s ease infinite;
+}
+@keyframes forestBreeze {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* ── Global ── */
@@ -35,16 +79,16 @@ body {
   color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  transition: color 1.5s ease;
-  background-color: #1a1a1a;
+  transition: color 0.6s ease;
+  /* Background is set via theme classes above */
 }
 
 /* ── Header ── */
 header {
   padding: 0.9rem 1.4rem;
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -63,14 +107,14 @@ header h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: background 1.5s ease;
+  transition: background 0.6s ease;
 }
 
-/* ── Theme button ── */
+/* ── Theme toggle ── */
 .theme-switch-wrapper { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
 
 #theme-toggle-btn {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.1);
   border: 1px solid var(--border);
   color: var(--text);
   padding: 0.3rem 0.75rem;
@@ -89,15 +133,16 @@ header h1 {
   background: var(--accent-gradient);
   border-color: transparent;
   transform: scale(1.05);
+  color: #fff;
 }
 
 .theme-name-display {
   font-size: 0.55rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.5;
+  opacity: 0.6;
   color: var(--text);
-  transition: color 1.5s ease;
+  transition: color 0.6s ease;
 }
 
 /* ── Main ── */
@@ -115,9 +160,9 @@ form {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   margin-bottom: 1.5rem;
-  transition: background 1.5s;
+  transition: background 0.6s;
 }
 
 input[type="text"] {
@@ -143,7 +188,7 @@ button[type="submit"] {
   cursor: pointer;
   transition: opacity 0.2s, transform 0.2s;
 }
-button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
+button[type="submit"]:hover { opacity: 0.88; transform: scale(1.03); }
 
 /* ── Filters ── */
 .filters {
@@ -153,7 +198,7 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
   border-radius: 0.75rem;
   padding: 0.2rem;
   margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .filters button {
@@ -170,7 +215,7 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
 }
 
 .filters button.active {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.15);
   color: var(--text);
   font-weight: 700;
 }
@@ -187,7 +232,7 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   animation: slideIn 0.35s cubic-bezier(0.16,1,0.3,1);
   transition: background 0.25s, transform 0.25s;
 }
@@ -208,8 +253,8 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
 
 /* ── Delete btn ── Always visible on iOS (touch has no hover) ── */
 .task-actions button {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
   color: var(--text-muted);
   width: 32px;
   height: 32px;
@@ -217,20 +262,18 @@ button[type="submit"]:hover { opacity: 0.85; transform: scale(1.03); }
   border-radius: 50%;
   font-size: 0.75rem;
   cursor: pointer;
-  opacity: 0.55;
+  opacity: 0.6;
   transition: opacity 0.2s, background 0.2s;
-  /* Ensure tap target is big enough on iOS */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
-/* Show fully on hover (desktop) or active/touch (iOS) */
 .task-item:hover .task-actions button,
 .task-actions button:hover,
 .task-actions button:active { opacity: 1; }
 
 .task-actions button:hover,
-.task-actions button:active { background: rgba(239,68,68,0.25); color:#fca5a5; }
+.task-actions button:active { background: rgba(239,68,68,0.3); color:#fca5a5; }
 
 /* ── Checkbox ── */
 input[type="checkbox"] {
@@ -264,5 +307,5 @@ input[type="checkbox"]:checked::after {
   padding: 3rem 0;
   color: var(--text-muted);
   font-size: 0.88rem;
-  opacity: 0.7;
+  opacity: 0.75;
 }
