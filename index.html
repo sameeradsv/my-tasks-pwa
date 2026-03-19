@@ -80,6 +80,8 @@
       <input id="task-input" type="text" placeholder="Capture anything..." required />
       <button type="submit">Add</button>
     </form>
+        <input type="file" id="file-input" accept=".txt,.pdf" hidden />
+    <label for="file-input" class="import-btn">📋 Import</label>
 
     <!-- Tag selector -->
     <div class="tag-row" id="tag-row">
@@ -90,12 +92,6 @@
       <button class="tag-btn" data-tag="later">Later</button>
     </div>
 
-        <!-- Bulk Import Section -->
-    <div class="import-section">
-      <input type="file" id="file-input" accept=".txt,.pdf" hidden />
-      <label for="file-input" class="import-btn">
-        📂 Import Tasks from File
-      </label>
       <div id="import-status" class="import-status"></div>
     </div>
 
