@@ -1,5 +1,4 @@
-.tag-btn
-.tag-btn/* ── CSS Variables (set dynamically by JS via THEME_META) ── */
+/* ── CSS Variables (set dynamically by JS via THEME_META) ── */
 
 html {
   background: #0a0a0a;
@@ -467,11 +466,9 @@ input[type="checkbox"]:checked::after {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-}
 
 .tag-btn.active {
   background: var(--accent-gradient);
-  border-color: transparent;
   color: #fff;
   font-weight: 700;
 }
@@ -610,4 +607,25 @@ input[type="checkbox"]:checked::after {
 
 .nts-cancel:hover {
   background: rgba(255,255,255,0.12);
+}
+
+
+/* ── Import Button ── */
+.import-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text);
+    padding: 0.3rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+.import-btn:hover {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    color: #fff;
 }
