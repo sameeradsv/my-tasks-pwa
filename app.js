@@ -1,12 +1,13 @@
 // ── Theme management ──
-const THEMES = ['peach', 'coral', 'lavender', 'mint', 'olive'];const THEME_KEY = 'my_tasks_theme';
+const THEMES = ['peach', 'coral', 'lavender', 'mint', 'olive'];
+const THEME_KEY = 'my_tasks_theme';
 const THEME_NAMES = {
   peach:    'Peachy',
   coral:    'Coral',
   lavender: 'Lavender',
   mint:     'Mint',
   olive:    'Olive'
-};};
+};
 
 let autoRotateTimer = null;
 
@@ -17,7 +18,7 @@ function applyTheme(theme, save = true) {
   if (nameDisplay) nameDisplay.textContent = THEME_NAMES[theme] || theme;
   // Persist
   if (save) localStorage.setItem(THEME_KEY, theme);
-    // Notify canvas
+  // Notify canvas
   document.body.dispatchEvent(new CustomEvent('data-theme-change', {detail: theme}));
 }
 
@@ -31,7 +32,8 @@ function startAutoRotate() {
   if (autoRotateTimer) clearInterval(autoRotateTimer);
   autoRotateTimer = setInterval(() => {
     applyTheme(nextTheme());
-300000}
+  }, 300000);
+}
 
 function stopAutoRotate() {
   if (autoRotateTimer) {
@@ -50,7 +52,7 @@ function initTheme() {
   const btn = document.getElementById('theme-toggle-btn');
   if (btn) {
     btn.addEventListener('click', () => {
-  }, 300000); // rotate every 5 minutes      applyTheme(nextTheme());
+      applyTheme(nextTheme());
       // Resume auto-rotate after 3 minutes
       setTimeout(startAutoRotate, 180000);
     });
@@ -155,7 +157,7 @@ function renderTasks() {
     actions.className = 'task-actions';
 
     const delBtn = document.createElement('button');
-    delBtn.textContent = '✕';
+    delBtn.textContent = '\u2715';
     delBtn.setAttribute('aria-label', 'Delete task');
     delBtn.addEventListener('click', () => deleteTask(task.id));
 
