@@ -31,9 +31,6 @@ function applyTheme(theme, save = true) {
     root.style.setProperty('--text-muted', meta.textMuted);
   }
 
-  // Update theme button label
-  const nameDisplay = document.getElementById('theme-name-display');
-  if (nameDisplay) nameDisplay.textContent = meta ? meta.name : theme;
 
   if (save) localStorage.setItem(THEME_KEY, theme);
 }
@@ -65,16 +62,7 @@ function initTheme() {
   applyTheme(theme, false);
   startAutoRotate();
 
-  const btn = document.getElementById('theme-toggle-btn');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      applyTheme(nextTheme());
-      // Resume auto-rotate 3 min after manual change
-      stopAutoRotate();
-      setTimeout(startAutoRotate, 180000);
-    });
-  }
-}
+  
 
 // ── Task management ──
 const STORAGE_KEY = 'my_tasks_v1';
