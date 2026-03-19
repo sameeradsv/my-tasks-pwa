@@ -294,3 +294,99 @@ tagButtons.forEach(btn => {
 initTheme();
 initModes();
 loadTasks();
+
+
+// — Bulk Import —
+const fileInput = document.getElementById('file-input');
+const importBtn = document.querySelector('.import-btn');
+const importStatus = document.getElementById('import-status');
+
+if (fileInput && importBtn) {
+  importBtn.addEventListener('click', () => fileInput.click());
+  
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    importStatus.textContent = 'Processing...';
+    importStatus.style.display = 'block';
+    
+    try {
+      const text = await file.text();
+      const imported = parseAndClassifyTasks(text);
+      
+      imported.forEach(task => {
+        tasks.push({
+          id: Date.now() + Math.random(),
+          text: task.text,
+          completed: false,
+          tag: task.tag,
+          tinyStep: '',
+          effort: task.effort,
+          createdAt: Date.now()
+        });
+      });
+      
+      saveTasks();
+      renderTasks();
+      updateSnapshot();
+      
+      importStatus.textContent = `✅ Imported ${imported.length} tasks`;
+      setTimeout(() => {
+        importStatus.style.display = 'none';
+      }, 3000);
+    } catch (err) {
+      importStatus.textContent = '❌ Error processing file';
+      console.error(err);
+    }
+    
+    fileInput.value = '';
+  });
+}
+
+function parseAndClassifyTasks(text) {
+  const lines = text.split(/\r?\n/);
+  const tasks = [];
+  
+  lines.forEach(line => {
+    line = line.trim();
+    if (!line || line.length < 3) return;
+    
+    // Remove common list markers
+    line = line.replace(/^[-*•◦▪▫]\s*/, '');
+    line = line.replace(/^\d+[.)\s]+/, '');
+    line = line.replace(/^\[[ x]\]\s*/i, '');
+    
+    if (line.length < 3) return;
+    
+    // Auto-classify based on keywords
+    let tag = 'general';
+    let effort = 'medium';
+    
+    const lower = line.toLowerCase();
+    
+    // Work-related
+    if (lower.match(/\b(meeting|email|report|review|code|develop|deploy|fix|bug|test|call|presentation)\b/)) {
+      tag = 'work';
+    }
+    // Social-related  
+    else if (lower.match(/\b(friend|family|call|text|birthday|party|dinner|lunch|visit|message)\b/)) {
+      tag = 'social';
+    }
+    // Later/someday
+    else if (lower.match(/\b(someday|maybe|later|eventually|consider|explore|research)\b/)) {
+      tag = 'later';
+    }
+    
+    // Effort detection
+    if (lower.match(/\b(quick|simple|easy|small|5\s*min)\b/)) {
+      effort = 'low';
+    } else if (lower.match(/\b(complex|difficult|major|large|project|big)\b/)) {
+      effort = 'high';
+    }
+    
+    tasks.push({ text: line, tag, effort });
+  });
+  
+  return tasks;
+}
