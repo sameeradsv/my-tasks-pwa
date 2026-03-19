@@ -1,4 +1,10 @@
 /* ── CSS Variables (set dynamically by JS via THEME_META) ── */
+
+html {
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
 :root {
   --accent:           #7dd3fc;
   --accent2:          #c084fc;
@@ -15,6 +21,10 @@
 
 /* Base dark background for all themes */
 body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
   background-color: #0a0a0a; /* Almost black base */
 }
 
